@@ -76,8 +76,8 @@
      * ---------------------------------------------
      * @desc A polyfill for the native method. For method details
      *   [see MDN]{@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze}
-     * @param {Object} obj
-     * @return {Object}
+     * @param {!Object} obj
+     * @return {!Object}
      */
     Object.freeze = function(obj) {
 
@@ -111,4 +111,30 @@
         }
       };
     })(Object.freeze);
+  }
+
+  if (!Object.isFrozen) {
+    /**
+     * ---------------------------------------------
+     * Public Method (Object.isFrozen)
+     * ---------------------------------------------
+     * @desc A polyfill for the native method. For method details
+     *   [see MDN]{@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/isFrozen}
+     * @param {!Object} obj
+     * @return {boolean}
+     */
+    Object.isFrozen = function(obj) {
+
+      /** @type {string} */
+      var errorMessage;
+
+      if (!obj || (typeof obj !== 'object' && typeof obj !== 'function')) {
+        errorMessage = 'An Object.isFrozen call received an invalid object parameter. ';
+        errorMessage += 'Note: It only accepts non-null objects and functions.';
+        throw new TypeError(errorMessage);
+        return;
+      }
+
+      return true;
+    };
   }
