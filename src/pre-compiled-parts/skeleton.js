@@ -2,7 +2,7 @@
 
 /**
  * -----------------------------------------------------------------------------
- * Algorithm IV JavaScript Polyfills (v0.0.1)
+ * Algorithm IV JavaScript Polyfills (v0.0.2)
  * -----------------------------------------------------------------------------
  * @file Algorithm IV's JavaScript polyfills help ensure that our projects are
  *   cross-browser compatible. At the moment they only include selected
@@ -10,7 +10,7 @@
  *   that is completely polyfilled is the
  *   [Console]{@link https://github.com/imaginate/algorithmIV-javascript-polyfills/blob/master/src/pre-compiled-parts/polyfills/console.js}.
  * @module aIVPolyfills
- * @version 0.0.1
+ * @version 0.0.2
  * @author Adam Smith ({@link adamsmith@youlum.com})
  * @copyright 2015 Adam A Smith ([github.com/imaginate]{@link https://github.com/imaginate})
  * @license The Apache License ([algorithmiv.com/docs/license]{@link http://algorithmiv.com/docs/license})
@@ -37,6 +37,15 @@
  * @typedef {Array<Object>} objects
  * @typedef {Array<boolean>} booleans
  */
+
+////////////////////////////////////////////////////////////////////////////////
+// The Dependencies
+////////////////////////////////////////////////////////////////////////////////
+
+/* -----------------------------------------------------------------------------
+ * BestieJS JSON3 (dependencies/json3.min.js)
+ * -------------------------------------------------------------------------- */
+// insert-json3
 
 ////////////////////////////////////////////////////////////////////////////////
 // The JavaScript Polyfills

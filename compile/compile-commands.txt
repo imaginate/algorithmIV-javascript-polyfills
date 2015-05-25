@@ -15,6 +15,7 @@ src/algorithmIV-polyfills.js |    |
 ## UNIX Commands
 cd src/pre-compiled-parts
 sed \
+  -e "/insert-json3/ r dependencies/json3.min.js" \
   -e "/insert-polyfills-console/ r polyfills/console.js" \
   -e "/insert-polyfills-object/ r polyfills/object.js" \
   -e "/insert-polyfills-array/ r polyfills/array.js" <skeleton.js>algorithmIV-polyfills-temp.js
@@ -27,9 +28,10 @@ rm -f sed*
 ## MS-DOS Commands
 cd src\pre-compiled-parts
 sed ^
-  -e "/insert-polyfills-console/ r polyfills\console.js" ^
-  -e "/insert-polyfills-object/ r polyfills\object.js" ^
-  -e "/insert-polyfills-array/ r polyfills\array.js" <skeleton.js>algorithmIV-polyfills-temp.js
+  -e "/insert-json3/ r dependencies/json3.min.js" ^
+  -e "/insert-polyfills-console/ r polyfills/console.js" ^
+  -e "/insert-polyfills-object/ r polyfills/object.js" ^
+  -e "/insert-polyfills-array/ r polyfills/array.js" <skeleton.js>algorithmIV-polyfills-temp.js
 cd ..
 copy /y pre-compiled-parts\algorithmIV-polyfills-temp.js algorithmIV-polyfills.js
 del /f pre-compiled-parts\algorithmIV-polyfills-temp.js
