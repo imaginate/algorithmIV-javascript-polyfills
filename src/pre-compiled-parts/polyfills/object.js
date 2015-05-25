@@ -44,7 +44,6 @@
           errorMessage = 'An Object.keys call received an invalid object parameter. ';
           errorMessage += 'Note: It only accepts non-null objects and functions.';
           throw new TypeError(errorMessage);
-          return;
         }
 
         result = [];
@@ -88,7 +87,6 @@
         errorMessage = 'An Object.freeze call received an invalid object parameter. ';
         errorMessage += 'Note: It only accepts non-null objects and functions.';
         throw new TypeError(errorMessage);
-        return;
       }
 
       return obj;
@@ -132,7 +130,6 @@
         errorMessage = 'An Object.isFrozen call received an invalid object parameter. ';
         errorMessage += 'Note: It only accepts non-null objects and functions.';
         throw new TypeError(errorMessage);
-        return;
       }
 
       return true;
