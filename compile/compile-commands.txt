@@ -23,7 +23,7 @@ sed \
 cd ..
 cp -u pre-compiled-parts/algorithmIV-polyfills-temp.js algorithmIV-polyfills.js
 rm -f pre-compiled-parts/algorithmIV-polyfills-temp.js
-sed -i "s/^\/\/ insert-[a-zA-Z\-]*//" algorithmIV-polyfills.js
+sed -i "s/^\/\/ insert-[a-zA-Z0-9\-]*$//" algorithmIV-polyfills.js
 rm -f sed*
 
 ## MS-DOS Commands
@@ -37,7 +37,7 @@ sed ^
 cd ..
 copy /y pre-compiled-parts\algorithmIV-polyfills-temp.js algorithmIV-polyfills.js
 del /f pre-compiled-parts\algorithmIV-polyfills-temp.js
-sed -i "s/^\/\/ insert-[a-zA-Z\-]*//" algorithmIV-polyfills.js
+sed -i "s/^\/\/ insert-[a-zA-Z0-9\-]*$//" algorithmIV-polyfills.js
 del /f sed*
 
 ----------------------------------------------------------------
