@@ -17,8 +17,8 @@ sed \
   -e "/insert-array/ r polyfills/array.js" \
   -e "/insert-xml-http-request/ r polyfills/xml-http-request.js" <skeleton.js>cure-temp.js
 cd ..
-cp -u pre-compiled-parts/cure-temp.js cure.js
-rm -f pre-compiled-parts/cure-temp.js
+cp -u pre-compiled-cure/cure-temp.js cure.js
+rm -f pre-compiled-cure/cure-temp.js
 sed -i "s/^\/\/ insert-[a-zA-Z0-9\-]*$//" cure.js
 rm -f sed*
 
@@ -31,7 +31,7 @@ sed ^
   -e "/insert-array/ r polyfills/array.js" ^
   -e "/insert-xml-http-request/ r polyfills/xml-http-request.js" <skeleton.js>cure-temp.js
 cd ..
-copy /y pre-compiled-parts\cure-temp.js cure.js
-del /f pre-compiled-parts\cure-temp.js
+copy /y pre-compiled-cure\cure-temp.js cure.js
+del /f pre-compiled-cure\cure-temp.js
 sed -i "s/^\/\/ insert-[a-zA-Z0-9\-]*$//" cure.js
 del /f sed*
