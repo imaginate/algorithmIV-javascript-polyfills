@@ -22,10 +22,9 @@ Download [cure.min.js](https://github.com/imaginate/cure/blob/master/src/cure.mi
 ##Contact Us
 - [Open an issue](https://github.com/imaginate/cure/issues) on this GitHub repository
 - Send an email to [learn@algorithmiv.com](mailto:learn@algorithmiv.com)
-
-
 <br />
+
 --
 **Happy Developing,**
 
-<a href="http://www.algorithmiv.com"><img src="http://www.algorithmiv.com/images/aIV-logo.png" alt="Algorithm IV Logo" /></a>
+<a href="http://www.algorithmiv.com/cure"><img src="http://www.algorithmiv.com/images/aIV-logo.png" alt="Algorithm IV Logo" /></a>
