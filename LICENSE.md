@@ -1,4 +1,4 @@
-##License for [Algorithm IV JavaScript Polyfills](https://github.com/imaginate/algorithmIV-javascript-polyfills)
+##License for [Cure.js](http://www.algorithmiv.com/cure)
 
 **Copyright 2015 Adam A Smith (github.com/imaginate)**
 
@@ -15,4 +15,4 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 --
-<a href="http://www.algorithmiv.com"><img src="http://www.algorithmiv.com/images/aIV-logo.png" alt="Algorithm IV Logo" /></a>
+<a href="http://www.algorithmiv.com/cure"><img src="http://www.algorithmiv.com/images/aIV-logo.png" alt="Algorithm IV Logo" /></a>
