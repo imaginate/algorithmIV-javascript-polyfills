@@ -1,80 +1,37 @@
-COMPILE AND MINIFY COMMANDS                                    |
--------------------------------------------------------------- |
-Requirements:                                                  |
-GNU Sed (http://www.gnu.org/software/sed/)                     |
-Java (http://www.oracle.com/technetwork/java/javase/overview/) |
-----------------------------------------------------------------
-
-----------------------------------------------------------------
-COMPILE SRC                  |
----------------------------- |    |
-File:                        |    |
-src/algorithmIV-polyfills.js |    |
-------------------------------    v
+COMPILE COMMANDS                              |
+--------------------------------------------- |
+Requirements:                                 |
+GNU Sed (http://www.gnu.org/software/sed/)    |
+--------------------------------------------- |
+Input Folder: pre-compiled-cure/              |
+Outline: pre-compiled-cure/skeleton.js        |
+Output: cure.js                               |
+-----------------------------------------------
 
 ## UNIX Commands
-cd src/pre-compiled-parts
+cd src/pre-compiled-cure
 sed \
   -e "/insert-json3/ r dependencies/json3.min.js" \
   -e "/insert-console/ r polyfills/console.js" \
   -e "/insert-object/ r polyfills/object.js" \
   -e "/insert-array/ r polyfills/array.js" \
-  -e "/insert-xml-http-request/ r polyfills/xml-http-request.js" <skeleton.js>algorithmIV-polyfills-temp.js
+  -e "/insert-xml-http-request/ r polyfills/xml-http-request.js" <skeleton.js>cure-temp.js
 cd ..
-cp -u pre-compiled-parts/algorithmIV-polyfills-temp.js algorithmIV-polyfills.js
-rm -f pre-compiled-parts/algorithmIV-polyfills-temp.js
-sed -i "s/^\/\/ insert-[a-zA-Z0-9\-]*$//" algorithmIV-polyfills.js
+cp -u pre-compiled-parts/cure-temp.js cure.js
+rm -f pre-compiled-parts/cure-temp.js
+sed -i "s/^\/\/ insert-[a-zA-Z0-9\-]*$//" cure.js
 rm -f sed*
 
 ## MS-DOS Commands
-cd src\pre-compiled-parts
+cd src\pre-compiled-cure
 sed ^
   -e "/insert-json3/ r dependencies/json3.min.js" ^
   -e "/insert-console/ r polyfills/console.js" ^
   -e "/insert-object/ r polyfills/object.js" ^
   -e "/insert-array/ r polyfills/array.js" ^
-  -e "/insert-xml-http-request/ r polyfills/xml-http-request.js" <skeleton.js>algorithmIV-polyfills-temp.js
+  -e "/insert-xml-http-request/ r polyfills/xml-http-request.js" <skeleton.js>cure-temp.js
 cd ..
-copy /y pre-compiled-parts\algorithmIV-polyfills-temp.js algorithmIV-polyfills.js
-del /f pre-compiled-parts\algorithmIV-polyfills-temp.js
-sed -i "s/^\/\/ insert-[a-zA-Z0-9\-]*$//" algorithmIV-polyfills.js
+copy /y pre-compiled-parts\cure-temp.js cure.js
+del /f pre-compiled-parts\cure-temp.js
+sed -i "s/^\/\/ insert-[a-zA-Z0-9\-]*$//" cure.js
 del /f sed*
-
-----------------------------------------------------------------
-MINIFY SRC                   |
----------------------------- |    |
-File:                        |    |
-src/algorithmIV-polyfills.js |    |
-------------------------------    v
-
-## UNIX Commands
-sed "3,27 d;41,66 d" <src/algorithmIV-polyfills.js>compile/algorithmIV-polyfills.js
-cd compile
-java \
-  -jar minifier.jar \
-  --js algorithmIV-polyfills.js \
-  --js_output_file algorithmIV-polyfills.min.js
-rm -f algorithmIV-polyfills.js
-cd ..
-sed \
-  -e "1 r src/pre-compiled-parts/dependencies/json3.min.js" \
-  -e "s/ blank line \*\///" \
-  -e "2 r compile/copyright.txt" \
-  -e "1 d" <compile/algorithmIV-polyfills.min.js>src/algorithmIV-polyfills.min.js
-rm -f compile/algorithmIV-polyfills.min.js
-
-## MS-DOS Commands
-sed "3,27 d;41,66 d" <src\algorithmIV-polyfills.js>compile\algorithmIV-polyfills.js
-cd compile
-java ^
-  -jar minifier.jar ^
-  --js algorithmIV-polyfills.js ^
-  --js_output_file algorithmIV-polyfills.min.js
-del /f algorithmIV-polyfills.js
-cd ..
-sed ^
-  -e "1 r src\pre-compiled-parts\dependencies\json3.min.js" ^
-  -e "s/ blank line \*\///" ^
-  -e "2 r compile\copyright.txt" ^
-  -e "1 d" <compile\algorithmIV-polyfills.min.js>src\algorithmIV-polyfills.min.js
-del /f compile\algorithmIV-polyfills.min.js
