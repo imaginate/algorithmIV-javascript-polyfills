@@ -9,7 +9,7 @@ Output File: src/cure.min.js                                   |
 ----------------------------------------------------------------
 
 ## UNIX Commands
-sed "3,27 d;41,66 d" <src/cure.js>compile/cure.js
+sed "3,23 d;37,62 d" <src/cure.js>compile/cure.js
 cd compile
 java \
   -jar minifier.jar \
@@ -25,7 +25,7 @@ sed \
 rm -f compile/cure.min.js
 
 ## MS-DOS Commands
-sed "3,27 d;41,66 d" <src\cure.js>compile\cure.js
+sed "3,23 d;37,62 d" <src\cure.js>compile\cure.js
 cd compile
 java ^
   -jar minifier.jar ^
