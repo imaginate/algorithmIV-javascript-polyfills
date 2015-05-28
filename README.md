@@ -1,17 +1,17 @@
-#Ensuring aIV Projects Run Smoothly!
+# Make Your JS & DOM Cross-Browser Compatible 
 
+#### Cure.js is a collection of JavaScript and DOM polyfills that help ensure your web development is cross-browser compatible.
 
-####Algorithm IV's JavaScript polyfills help ensure that our projects are cross-browser compatible. At the moment they only include polyfills for functionality that is used in our code base. The only native functionality that is completely polyfilled is the [Console](https://github.com/imaginate/algorithmIV-javascript-polyfills/blob/master/src/pre-compiled-parts/polyfills/console.js).
+#### Note: At the moment Cure only includes polyfills for a small portion of the native JavaScript and DOM objects (specifically the functionality used by [imaginate](https://github.com/imaginate)'s other projects). The only object's functionality that has been completely polyfilled is the [Console](https://github.com/imaginate/cure/blob/master/src/pre-compiled-parts/polyfills/console.js).
 
 
 ##Getting Started
-- Download [algorithmIV-polyfills.min.js](https://github.com/imaginate/algorithmIV-javascript-polyfills/blob/master/src/algorithmIV-utils.min.js)
-- Add algorithmIV-polyfills.min.js to your HTML head before any other scripts
+Download [cure.min.js](https://github.com/imaginate/cure/blob/master/src/cure.min.js) and add it to your HTML head before any other scripts.
 ```html
 <html>
     <head>
         ...
-        <script src="algorithmIV-polyfills.min.js"></script>
+        <script src="cure.min.js"></script>
         ...
     </head>
     <body>...</body>
@@ -20,9 +20,11 @@
 
 
 ##Contact Us
+- [Open an issue](https://github.com/imaginate/cure/issues) on this GitHub repository
 - Send an email to [learn@algorithmiv.com](mailto:learn@algorithmiv.com)
 
 
+<br />
 --
 **Happy Developing,**
 
