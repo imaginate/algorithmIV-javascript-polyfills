@@ -35,8 +35,32 @@
  */
 
 ////////////////////////////////////////////////////////////////////////////////
+// Export Cure
+////////////////////////////////////////////////////////////////////////////////
+
+;(function(root, cure) {
+
+  // AMD
+  if (typeof define === 'function' && define.amd &&
+      typeof define.amd === 'object') {
+    define([], cure);
+  }
+  // Node.js
+  else if (typeof exports === 'object') {
+    module.exports = cure;
+  }
+  // Browser
+  else {
+    cure();
+  }
+
+})(this,
+
+////////////////////////////////////////////////////////////////////////////////
 // The Cure Polyfills
 ////////////////////////////////////////////////////////////////////////////////
+
+function cure() {
 // cure-polyfills-begin-flag
 
 /* -----------------------------------------------------------------------------
@@ -70,4 +94,5 @@
  * -------------------------------------------------------------------------- */
 // insert-object
 
-})(window, document);
+})(window, document); // End anon module
+});  // End cure module & export
