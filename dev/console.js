@@ -1,3 +1,4 @@
+
   /**
    * -----------------------------------------------------
    * Global Object (console)
@@ -354,4 +355,4 @@
     })((typeof console.log === 'object'), Function.prototype.bind,
         Function.prototype.call, Array.prototype.slice);
 
-  })(window.console, function() {});
+  })(window.console, function(){});
