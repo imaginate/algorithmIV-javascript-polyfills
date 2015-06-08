@@ -263,15 +263,14 @@ function compileScript(destDir, filename, minify, parts) {
   parts.split(' ').forEach( insertScript(fileDest) );
   cleanScript(fileDest, true);
 
-  minify && minifyScript(fileDest, hasJson(parts));
+  minify && minifyScript(fileDest);
 }
 
 /**
  * Minifies the newly compiled script.
  * @param {string} file - The file to minify.
- * @param {boolean} addExterns - Adds externs to the minified script.
  */
-function minifyScript(file, addExterns) {
+function minifyScript(file) {
 
   /** @type {string} */
   var fileDest;
@@ -279,13 +278,11 @@ function minifyScript(file, addExterns) {
   fileDest = file.replace(jsFileExt, '.min.js');
   cp('-f', file, fileDest);
   removeIntro(fileDest, true);
-  removeExterns(fileDest, true);
   exec('java -jar "resources/closure-compiler.jar" --js "' + fileDest + '"')
     .output
     .to(fileDest);
   fixLineBreaks(fileDest, true);
-  insertCopyright(fileDest, addExterns);
-  addExterns && insertExterns(fileDest);
+  insertCopyright(fileDest);
 }
 
 /**
@@ -396,9 +393,8 @@ function removeExterns(file, inplace) {
 /**
  * Inserts the copyright for a minified cure.js file.
  * @param {string} file - The file to update.
- * @param {boolean=} space - If true adds starting line breaks.
  */
-function insertCopyright(file, space) {
+function insertCopyright(file) {
 
   /** @type {!RegExp} */
   var regex;
@@ -406,8 +402,7 @@ function insertCopyright(file, space) {
   var copyright;
 
   regex = /^[\s\S]*?blank-line.*\n/;
-  copyright = (space) ? '\n\n' : '';
-  copyright += fixLineBreaks('resources/minified-copyright.txt');
+  copyright = fixLineBreaks('resources/minified-copyright.txt');
   sed('-i', regex, copyright, file);
 }
 
@@ -422,7 +417,7 @@ function insertExterns(file) {
   /** @type {string} */
   var externs;
 
-  regex = /^\n/;
+  regex = /\/\*.*?json3-flag.*?\*\//;
   externs = cat('dev/json.js').replace(regex, '');
   sed('-i', regex, externs, file);
 }
