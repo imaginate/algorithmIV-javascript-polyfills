@@ -75,30 +75,35 @@ catch (error) {
 // The CLI Make Command
 // @example
 //   // BASE SYNTAX EXPLAINED
-//   $ node make [output-filename=] [minify-output=] [category...]
+//   $ node make [src|tests=] [output-filename=] [minify-output=] [category...]
 //   
 //   // CATEGORY OPTIONS
 //   // ajax all array console json object
 //   
-//   // MAKES FILES scr/cure-obj-arr-json.js AND src/cure-obj-arr-json.min.js
+//   // MAKES FILES cure-obj-arr-json.js AND cure-obj-arr-json.min.js
 //   $ node make cure-obj-arr-json object array json
 //   
-//   // MAKES FILES scr/cure.js AND src/cure.min.js
+//   // MAKES FILES custom-cure.js AND custom-cure.min.js
 //   $ node make
 //   
-//   // MAKES FILE scr/cure-ajax.js
+//   // MAKES FILE cure-ajax.js
 //   $ node make cure-ajax false ajax
 //   
-//   // MAKES FILE scr/cure.js
+//   // MAKES FILE custom-cure.js
 //   $ node make false
 //   
+//   // MAKES FILES src/cure.js AND src/cure.min.js
+//   // additional arguments are ignored when the src command is used
+//   $ node make src
+//   
 //   // MAKES FILE tests/cure.js
-//   // additional arguments are ignored when 'tests' or 'test' is used
-//   // tests will never be partially compiled or minified
+//   // additional arguments are ignored when the tests or test command is used
 //   $ node make tests
 
 /** @type {!RegExp} */
 var jsFileExt;
+/** @type {function(string): boolean} */
+var isSrc;
 /** @type {function(string): boolean} */
 var isTest;
 /** @type {function(string): boolean} */
@@ -113,6 +118,12 @@ var isAll;
 var args;
 
 jsFileExt = /\.js$/;
+
+isSrc = (function setup_isSrc(/** !RegExp */ srcs) {
+  return function isSrc(str) {
+    return srcs.test(str);
+  };
+})(/^src$/i);
 
 isTest = (function setup_isTest(/** !RegExp */ tests) {
   return function isTest(str) {
@@ -157,7 +168,7 @@ if (!hasError) {
 function parseCmd(args) {
 
   /** @type {string} */
-  var dest;
+  var destDir;
   /** @type {string} */
   var output;
   /** @type {boolean} */
@@ -167,15 +178,20 @@ function parseCmd(args) {
   /** @type {string} */
   var arg;
 
-  dest   = 'src';
-  output = 'cure';
-  minify = true;
-  parts  = 'all';
+  destDir = '';
+  output  = 'custom-cure';
+  minify  = true;
+  parts   = 'all';
 
   if (args) {
     arg = args[0];
-    if ( isTest(arg) ) {
-      dest = 'tests';
+    if ( isSrc(arg) ) {
+      destDir = 'src/';
+      output = 'cure';
+    }
+    else if ( isTest(arg) ) {
+      destDir = 'tests/';
+      output = 'cure';
       minify = false;
     }
     else {
@@ -212,29 +228,91 @@ function parseCmd(args) {
     }
   }
 
-  compileScript(dest, output, minify, parts);
+  compileScript(destDir, output, minify, parts);
 }
 
 /**
  * Compiles cure.js from the parts in the dev folder.
- * @param {string} dest - The folder to place the compiled result.
- * @param {string} output - The output filename.
+ * @param {string} destDir - The folder to place the compiled result.
+ * @param {string} filename - The output filename.
  * @param {boolean} minify - Whether to minify the output.
  * @param {string} parts - The parts to include in cure.js.
  */
-function compileScript(dest, output, minify, parts) {
+function compileScript(destDir, filename, minify, parts) {
 
-  if ( !jsFileExt.test(output) ) {
-    output += '.js';
+  /** @type {string} */
+  var fileDest;
+
+  if ( !jsFileExt.test(filename) ) {
+    filename += '.js';
   }
-  dest = __dirname + '/' + dest + '/' + output;
+  fileDest = destDir + filename;
   parts = isAll(parts) ? 'ajax array console json object' : parts.toLowerCase();
 
-  parts.split(' ').forEach(function(/** string */ part) {
-    
-  });
+  cd(__dirname);
+  cp('-f', 'dev/skeleton.js', fileDest);
+  fixLineBreaks(fileDest, true);
+  parts.split(' ').forEach( insertScript(fileDest) );
+  cleanScript(fileDest, true);
 
-  minify && minifyScript(dest);
+  minify && minifyScript(fileDest);
+}
+
+/**
+ * Standardize all line breaks in a file.
+ * @param {string} file - The file to standardize.
+ * @param {boolean=} inplace - Replace the file's contents.
+ * @return {string} The fixed file's string.
+ */
+function fixLineBreaks(file, inplace) {
+
+  /** @type {!RegExp} */
+  var regex;
+
+  regex = /\r\n?/g;
+  return (inplace) ? sed('-i', regex, '\n', file) : sed(regex, '\n', file);
+}
+
+/**
+ * Returns a function that inserts a section of cure.js from ./dev/ into a file.
+ * @param {string} filePath - The path to the file to insert a part into.
+ * @return {function} The insert function.
+ */
+function insertScript(filePath) {
+
+  /** @type {!RegExp} */
+  var regex;
+  /** @type {string} */
+  var filePart;
+
+  return function insertScript(/** string */ part) {
+    if (isPart(part) && !isAll(part)) {
+      regex = new RegExp('\\n\\/\\/\\sinsert-' + part + '.*\\n');
+      filePart = '\n' + fixLineBreaks('dev/' + part + '.js');
+      sed('-i', regex, filePart, filePath);
+    }
+  };
+}
+
+/**
+ * Removes unused parts from a compiled cure.js file.
+ * @param {string} file - The file to clean.
+ * @param {boolean=} inplace - Replace the file's contents.
+ * @return {string} The cleaned file's content.
+ */
+function cleanScript(file, inplace) {
+
+  /** @type {!RegExp} */
+  var regex;
+  /** @type {string} */
+  var fileStr;
+
+  regex = /\n\n\/\*[\s\S]*?\*\/\n\/\/\sinsert-.*?\n/g;
+  fileStr = cat(file);
+  return ( (!regex.test(fileStr)) ?
+    fileStr : (inplace) ?
+      sed('-i', regex, '', file) : fileStr.replace(regex, '')
+  );
 }
 
 /**
