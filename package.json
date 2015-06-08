@@ -1,0 +1,33 @@
+{
+  "name": "cure",
+  "version": "0.0.3",
+  "description": "Cure Your JS & DOM Browser Incompatibilities",
+  "main": "src/cure.min.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/imaginate/cure.git"
+  },
+  "keywords": [
+    "cure",
+    "cross-browser",
+    "polyfill",
+    "compatible",
+    "javascript",
+    "imaginate"
+  ],
+  "author": "Adam Smith <adamsmith@algorithmiv.com> (https://github.com/imaginate)",
+  "license": "Apache-2.0",
+  "scripts": {
+    "test": "node tests/run-tests.js"
+  },
+  "bugs": {
+    "url": "https://github.com/imaginate/cure/issues"
+  },
+  "homepage": "http://www.algorithmiv.com/cure",
+  "devDependencies": {
+    "shelljs": "0.5.1"
+  },
+  "engines": {
+    "node": ">=0.8.0"
+  }
+}
