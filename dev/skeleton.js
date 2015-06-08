@@ -61,7 +61,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 function cure() {
-// cure-polyfills-begin-flag
 
 /* -----------------------------------------------------------------------------
  * Cure JSON (json.js)
@@ -70,7 +69,6 @@ function cure() {
  * -------------------------------------------------------------------------- */
 // insert-json
 
-// cure-module-begin-flag
 (function(window, document, undefined) {
   "use strict";
 
