@@ -1,18 +1,18 @@
-/** @preserve blank line */
+/** @preserve blank-line */
 
 /**
  * -----------------------------------------------------------------------------
- * Cure.js (v0.0.2)
+ * Cure.js (v0.0.3)
  * -----------------------------------------------------------------------------
  * @file Cure.js is a collection of JavaScript and DOM polyfills that help
  *   ensure that your web development is cross-browser compatible. At the moment
  *   they only include a small selection of polyfills needed to support
  *   [imaginate]{@link https://github.com/imaginate}'s other projects. The only
  *   native object's functionality that has been completely polyfilled is the
- *   [Console]{@link https://github.com/imaginate/cure/blob/master/src/pre-compiled-cure/polyfills/console.js}
+ *   [Console]{@link https://github.com/imaginate/cure/blob/master/dev/console.js}
  *   object.
  * @module Cure
- * @version 0.0.2
+ * @version 0.0.3
  * @author Adam Smith adamsmith@algorithmiv.com
  * @copyright 2015 Adam A Smith [github.com/imaginate]{@link https://github.com/imaginate}
  * @license The Apache License [algorithmiv.com/cure/license]{@link http://algorithmiv.com/cure/license}
@@ -35,15 +35,41 @@
  */
 
 ////////////////////////////////////////////////////////////////////////////////
-// The Dependencies
+// Export Cure
 ////////////////////////////////////////////////////////////////////////////////
 
+;(function(root, cure) {
+
+  // AMD
+  if (typeof define === 'function' && define.amd &&
+      typeof define.amd === 'object') {
+    define([], cure);
+  }
+  // Node.js
+  else if (typeof exports === 'object') {
+    module.exports = cure;
+  }
+  // Browser
+  else {
+    cure();
+  }
+
+})(this,
+
+////////////////////////////////////////////////////////////////////////////////
+// The Cure Polyfills
+////////////////////////////////////////////////////////////////////////////////
+
+function cure() {
+
 /* -----------------------------------------------------------------------------
- * BestieJS JSON3 (dependencies/json3.min.js)
+ * Cure JSON (json.js)
+ * --------------------------------------------------------------------------
+ * Note: Uses 3rd Party Script - JSON3 v3.3.2 (bestiejs.github.io/json3)
  * -------------------------------------------------------------------------- */
 
 /* JSON3 v3.3.2 | https://bestiejs.github.io/json3 | Copyright 2012-2015, Kit Cambridge, Benjamin Tan | http://kit.mit-license.org */
-(function(){function M(r,q){function p(a,l){try{a()}catch(c){l&&l()}}function k(a){if(null!=k[a])return k[a];var l;if("bug-string-char-index"==a)l="a"!="a"[0];else if("json"==a)l=k("json-stringify")&&k("date-serialization")&&k("json-parse");else if("date-serialization"==a){if(l=k("json-stringify")&&v){var c=q.stringify;p(function(){l='"-271821-04-20T00:00:00.000Z"'==c(new z(-864E13))&&'"+275760-09-13T00:00:00.000Z"'==c(new z(864E13))&&'"-000001-01-01T00:00:00.000Z"'==c(new z(-621987552E5))&&'"1969-12-31T23:59:59.999Z"'==
+;(function(){function M(r,q){function p(a,l){try{a()}catch(c){l&&l()}}function k(a){if(null!=k[a])return k[a];var l;if("bug-string-char-index"==a)l="a"!="a"[0];else if("json"==a)l=k("json-stringify")&&k("date-serialization")&&k("json-parse");else if("date-serialization"==a){if(l=k("json-stringify")&&v){var c=q.stringify;p(function(){l='"-271821-04-20T00:00:00.000Z"'==c(new z(-864E13))&&'"+275760-09-13T00:00:00.000Z"'==c(new z(864E13))&&'"-000001-01-01T00:00:00.000Z"'==c(new z(-621987552E5))&&'"1969-12-31T23:59:59.999Z"'==
 c(new z(-1))})}}else{var b;if("json-stringify"==a){var c=q.stringify,e="function"==typeof c;e&&((b=function(){return 1}).toJSON=b,p(function(){e="0"===c(0)&&"0"===c(new B)&&'""'==c(new A)&&c(t)===u&&c(u)===u&&c()===u&&"1"===c(b)&&"[1]"==c([b])&&"[null]"==c([u])&&"null"==c(null)&&"[null,null,null]"==c([u,t,null])&&'{"a":[1,true,false,null,"\\u0000\\b\\n\\f\\r\\t"]}'==c({a:[b,!0,!1,null,"\x00\b\n\f\r\t"]})&&"1"===c(null,b)&&"[\n 1,\n 2\n]"==c([1,2],null,1)},function(){e=!1}));l=e}if("json-parse"==a){var n=
 q.parse,d;"function"==typeof n&&p(function(){0===n("0")&&!n(!1)&&(b=n('{"a":[1,true,false,null,"\\u0000\\b\\n\\f\\r\\t"]}'),d=5==b.a.length&&1===b.a[0])&&(p(function(){d=!n('"\t"')}),d&&p(function(){d=1!==n("01")}),d&&p(function(){d=1!==n("1.")}))},function(){d=!1});l=d}}return k[a]=!!l}r||(r=f.Object());q||(q=f.Object());var B=r.Number||f.Number,A=r.String||f.String,E=r.Object||f.Object,z=r.Date||f.Date,I=r.SyntaxError||f.SyntaxError,J=r.TypeError||f.TypeError,K=r.Math||f.Math,F=r.JSON||f.JSON;"object"==
 typeof F&&F&&(q.stringify=F.stringify,q.parse=F.parse);var E=E.prototype,t=E.toString,G=E.hasOwnProperty,u,v=new z(-0xc782b5b800cec);p(function(){v=-109252==v.getUTCFullYear()&&0===v.getUTCMonth()&&1===v.getUTCDate()&&10==v.getUTCHours()&&37==v.getUTCMinutes()&&6==v.getUTCSeconds()&&708==v.getUTCMilliseconds()});k["bug-string-char-index"]=k["date-serialization"]=k.json=k["json-stringify"]=k["json-parse"]=null;if(!k("json")){var N=k("bug-string-char-index"),C=function(a,b){var c=0,g,e,n;(g=function(){this.valueOf=
@@ -60,15 +86,138 @@ l&&(d=a.charCodeAt(b),48<=d&&57>=d);b++);if(46==a.charCodeAt(b)){for(e=++b;e<l&&
 e,c));else C(g,function(a){U(g,a,c)});return c.call(a,b,g)};q.parse=function(a,f){var c,g;b=0;H=""+a;c=R(y());"$"!=y()&&m();b=H=null;return f&&"[object Function]"==t.call(f)?T((g={},g[""]=c,g),"",f):c}}}q.runInContext=M;return q}var I=typeof define==="function"&&define.amd,D={"function":!0,object:!0},A=D[typeof exports]&&exports&&!exports.nodeType&&exports,f=D[typeof window]&&window||this,p=A&&D[typeof module]&&module&&!module.nodeType&&"object"==typeof global&&global;!p||p.global!==p&&p.window!==
 p&&p.self!==p||(f=p);if(A&&!I)M(f,A);else{var J=f.JSON,K=f.JSON3,L=!1,B=M(f,f.JSON3={noConflict:function(){L||(L=!0,f.JSON=J,f.JSON3=K,J=K=null);return B}});f.JSON={parse:B.parse,stringify:B.stringify}}I&&define(function(){return B})}).call(this);
 
-////////////////////////////////////////////////////////////////////////////////
-// The Cure Polyfills
-////////////////////////////////////////////////////////////////////////////////
-
-;(function(window, document, undefined) {
+(function(window, document, undefined) {
   "use strict";
 
 /* -----------------------------------------------------------------------------
- * The Console Polyfills (polyfills/console.js)
+ * Cure AJAX (ajax.js)
+ * -------------------------------------------------------------------------- */
+
+  if (!XMLHttpRequest) {
+    /**
+     * ---------------------------------------------
+     * Public Constructor (XMLHttpRequest)
+     * ---------------------------------------------
+     * @desc A polyfill for the native constructor. For details
+     *   [see MDN]{@link https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest}
+     * @constructor
+     */
+    XMLHttpRequest = function() {
+
+      /** @type {!Object} */
+      var obj;
+
+      try {
+        obj = new ActiveXObject('Msxml2.XMLHTTP.6.0');
+      }
+      catch (e) {
+        try {
+          obj = new ActiveXObject('Msxml2.XMLHTTP.3.0');
+        }
+        catch (e) {
+          try {
+            obj = new ActiveXObject('Microsoft.XMLHTTP');
+          }
+          catch (e) {
+            throw new Error('Your browser does not support XMLHttpRequest.');
+          }
+        }
+      }
+
+      return obj;
+    };
+  }
+
+/* -----------------------------------------------------------------------------
+ * Cure Array (array.js)
+ * -------------------------------------------------------------------------- */
+
+  if (!Array.isArray) {
+    /**
+     * ---------------------------------------------
+     * Public Method (Array.isArray)
+     * ---------------------------------------------
+     * @desc A polyfill for the native method. For method details
+     *   [see MDN]{@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/isArray}
+     * @param {*} val
+     * @return {boolean}
+     */
+    Array.isArray = function(val) {
+      return Object.prototype.toString.call(val) === '[object Array]';
+    };
+  }
+
+  /** @type {boolean} */
+  var checkArrayProtoIndexOf = (function checkArrayProtoIndexOf(doesIndexOf) {
+
+    /** @type {boolean} */
+    var result;
+    /** @type {!Array<number>} */
+    var arr;
+
+    result = doesIndexOf;
+    if (result) {
+     arr = [ 8, 9 ];
+     result = (arr.indexOf(8, 2)  === -1) && (arr.indexOf(9, -1) === -1);
+    }
+
+    return result;
+
+  })(!!Array.prototype.indexOf);
+
+  if (!checkArrayProtoIndexOf) {
+    /**
+     * ---------------------------------------------
+     * Public Method (Array.prototype.indexOf)
+     * ---------------------------------------------
+     * @desc A polyfill for the native method. For method details
+     *   [see MDN]{@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf}
+     * @param {*} findVal
+     * @param {number=} fromIndex
+     * @return {number}
+     */
+    Array.prototype.indexOf = function(findVal, fromIndex) {
+
+      /** @type {string} */
+      var errorMsg;
+      /** @type {number} */
+      var result;
+      /** @type {number} */
+      var len;
+      /** @type {number} */
+      var i;
+
+      if ( !Array.isArray(this) ) {
+        errorMsg = 'An Array.prototype.indexOf call was made on a non-array.';
+        throw new TypeError(errorMsg);
+      }
+
+      if (typeof fromIndex !== 'number') {
+        fromIndex = 0;
+      }
+      len = this.length;
+      result = -1;
+
+      // Loop through the array until a match or the end is found
+      if (len !== 0 && Math.abs(fromIndex) < len) {
+        if (fromIndex < 0) {
+          len = len - fromIndex;
+        }
+        i = (fromIndex < 0) ? -1 : --fromIndex;
+        while (++i < len) {
+          if (this[i] === findVal) {
+            result = i;
+            break;
+          }
+        }
+      }
+
+      return result;
+    };
+  }
+
+/* -----------------------------------------------------------------------------
+ * Cure Console (console.js)
  * -------------------------------------------------------------------------- */
 
   /**
@@ -427,10 +576,10 @@ p&&p.self!==p||(f=p);if(A&&!I)M(f,A);else{var J=f.JSON,K=f.JSON3,L=!1,B=M(f,f.JS
     })((typeof console.log === 'object'), Function.prototype.bind,
         Function.prototype.call, Array.prototype.slice);
 
-  })(window.console, function() {});
+  })(window.console, function(){});
 
 /* -----------------------------------------------------------------------------
- * The Object Polyfills (polyfills/object.js)
+ * Cure Object (object.js)
  * -------------------------------------------------------------------------- */
 
   if (!Object.keys) {
@@ -571,131 +720,5 @@ p&&p.self!==p||(f=p);if(A&&!I)M(f,A);else{var J=f.JSON,K=f.JSON3,L=!1,B=M(f,f.JS
     };
   }
 
-/* -----------------------------------------------------------------------------
- * The Array Polyfills (polyfills/array.js)
- * -------------------------------------------------------------------------- */
-
-  if (!Array.isArray) {
-    /**
-     * ---------------------------------------------
-     * Public Method (Array.isArray)
-     * ---------------------------------------------
-     * @desc A polyfill for the native method. For method details
-     *   [see MDN]{@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/isArray}
-     * @param {*} val
-     * @return {boolean}
-     */
-    Array.isArray = function(val) {
-      return Object.prototype.toString.call(val) === '[object Array]';
-    };
-  }
-
-  /** @type {boolean} */
-  var checkArrayProtoIndexOf = (function checkArrayProtoIndexOf(doesIndexOf) {
-
-    /** @type {boolean} */
-    var result;
-    /** @type {!Array<number>} */
-    var arr;
-
-    result = doesIndexOf;
-    if (result) {
-     arr = [ 8, 9 ];
-     result = (arr.indexOf(8, 2)  === -1) && (arr.indexOf(9, -1) === -1);
-    }
-
-    return result;
-
-  })(!!Array.prototype.indexOf);
-
-  if (!checkArrayProtoIndexOf) {
-    /**
-     * ---------------------------------------------
-     * Public Method (Array.prototype.indexOf)
-     * ---------------------------------------------
-     * @desc A polyfill for the native method. For method details
-     *   [see MDN]{@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf}
-     * @param {*} findVal
-     * @param {number=} fromIndex
-     * @return {number}
-     */
-    Array.prototype.indexOf = function(findVal, fromIndex) {
-
-      /** @type {string} */
-      var errorMsg;
-      /** @type {number} */
-      var result;
-      /** @type {number} */
-      var len;
-      /** @type {number} */
-      var i;
-
-      if ( !Array.isArray(this) ) {
-        errorMsg = 'An Array.prototype.indexOf call was made on a non-array.';
-        throw new TypeError(errorMsg);
-      }
-
-      if (typeof fromIndex !== 'number') {
-        fromIndex = 0;
-      }
-      len = this.length;
-      result = -1;
-
-      // Loop through the array until a match or the end is found
-      if (len !== 0 && Math.abs(fromIndex) < len) {
-        if (fromIndex < 0) {
-          len = len - fromIndex;
-        }
-        i = (fromIndex < 0) ? -1 : --fromIndex;
-        while (++i < len) {
-          if (this[i] === findVal) {
-            result = i;
-            break;
-          }
-        }
-      }
-
-      return result;
-    };
-  }
-
-/* -----------------------------------------------------------------------------
- * The XMLHttpRequest Polyfills (polyfills/xml-http-request.js)
- * -------------------------------------------------------------------------- */
-
-  if (!XMLHttpRequest) {
-    /**
-     * ---------------------------------------------
-     * Public Constructor (XMLHttpRequest)
-     * ---------------------------------------------
-     * @desc A polyfill for the native constructor. For details
-     *   [see MDN]{@link https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest}
-     * @constructor
-     */
-    XMLHttpRequest = function() {
-
-      /** @type {!Object} */
-      var obj;
-
-      try {
-        obj = new ActiveXObject('Msxml2.XMLHTTP.6.0');
-      }
-      catch (e) {
-        try {
-          obj = new ActiveXObject('Msxml2.XMLHTTP.3.0');
-        }
-        catch (e) {
-          try {
-            obj = new ActiveXObject('Microsoft.XMLHTTP');
-          }
-          catch (e) {
-            throw new Error('Your browser does not support XMLHttpRequest.');
-          }
-        }
-      }
-
-      return obj;
-    };
-  }
-
-})(window, document);
+})(window, document); // End anon module
+});  // End cure module & export
