@@ -114,6 +114,8 @@ var isBool;
 var isTrue;
 /** @type {function(string): boolean} */
 var isAll;
+/** @type {function(string): boolean} */
+var hasJson;
 /** @type {Array<string>} */
 var args;
 
@@ -154,6 +156,12 @@ isAll = (function setup_isAll(/** !RegExp */ all) {
     return all.test(str);
   };
 })(/^all$/i);
+
+hasJson = (function setup_hasJson(/** !RegExp */ parts) {
+  return function hasJson(str) {
+    return parts.test(str);
+  };
+})(/\bjson\b/);
 
 args = (process.argv[2]) ? process.argv.slice(2) : null;
 
@@ -255,22 +263,50 @@ function compileScript(destDir, filename, minify, parts) {
   parts.split(' ').forEach( insertScript(fileDest) );
   cleanScript(fileDest, true);
 
-  minify && minifyScript(fileDest);
+  minify && minifyScript(fileDest, hasJson(parts));
+}
+
+/**
+ * Minifies the newly compiled script.
+ * @param {string} file - The file to minify.
+ * @param {boolean} addExterns - Adds externs to the minified script.
+ */
+function minifyScript(file, addExterns) {
+
+  /** @type {string} */
+  var fileDest;
+
+  fileDest = file.replace(jsFileExt, '.min.js');
+  cp('-f', file, fileDest);
+  removeIntro(fileDest, true);
+  removeExterns(fileDest, true);
+  exec('java -jar "resources/closure-compiler.jar" --js "' + fileDest + '"')
+    .output
+    .to(fileDest);
+  fixLineBreaks(fileDest, true);
+  insertCopyright(fileDest, addExterns);
+  addExterns && insertExterns(fileDest);
 }
 
 /**
  * Standardize all line breaks in a file.
  * @param {string} file - The file to standardize.
  * @param {boolean=} inplace - Replace the file's contents.
- * @return {string} The fixed file's string.
+ * @return {string} The fixed file's contents.
  */
 function fixLineBreaks(file, inplace) {
 
   /** @type {!RegExp} */
   var regex;
+  /** @type {string} */
+  var fileStr;
 
   regex = /\r\n?/g;
-  return (inplace) ? sed('-i', regex, '\n', file) : sed(regex, '\n', file);
+  fileStr = cat(file);
+  return ( (!regex.test(fileStr)) ?
+    fileStr : (inplace) ?
+      sed('-i', regex, '\n', file) : fileStr.replace(regex, '\n')
+  );
 }
 
 /**
@@ -298,7 +334,7 @@ function insertScript(filePath) {
  * Removes unused parts from a compiled cure.js file.
  * @param {string} file - The file to clean.
  * @param {boolean=} inplace - Replace the file's contents.
- * @return {string} The cleaned file's content.
+ * @return {string} The cleaned file's contents.
  */
 function cleanScript(file, inplace) {
 
@@ -307,7 +343,7 @@ function cleanScript(file, inplace) {
   /** @type {string} */
   var fileStr;
 
-  regex = /\n\n\/\*[\s\S]*?\*\/\n\/\/\sinsert-.*?\n/g;
+  regex = /\n\n\/\*[\s\S]*?\*\/\n\/\/\sinsert-.*\n/g;
   fileStr = cat(file);
   return ( (!regex.test(fileStr)) ?
     fileStr : (inplace) ?
@@ -316,13 +352,77 @@ function cleanScript(file, inplace) {
 }
 
 /**
- * Minifies the newly compiled cure.js script.
- * @param {string} file - The file to minify.
+ * Removes the intro from a compiled cure.js file.
+ * @param {string} file - The file to clean.
+ * @param {boolean=} inplace - Replace the file's contents.
+ * @return {string} The cleaned file's contents.
  */
-function minifyScript(file) {
+function removeIntro(file, inplace) {
 
+  /** @type {!RegExp} */
+  var regex;
   /** @type {string} */
-  var dest;
+  var fileStr;
 
-  dest = file.replace(jsFileExt, '.min.js');
+  regex = /^(.*\n\n)[\s\S]*?\*\/\n/;
+  fileStr = cat(file);
+  return ( (!regex.test(fileStr)) ?
+    fileStr : (inplace) ?
+      sed('-i', regex, '$1', file) : fileStr.replace(regex, '$1')
+  );
+}
+
+/**
+ * Removes the external scripts from a compiled cure.js file.
+ * @param {string} file - The file to clean.
+ * @param {boolean=} inplace - Replace the file's contents.
+ * @return {string} The cleaned file's contents.
+ */
+function removeExterns(file, inplace) {
+
+  /** @type {!RegExp} */
+  var regex;
+  /** @type {string} */
+  var fileStr;
+
+  regex = /.*cure-polyfills-begin-flag[\s\S]*?cure-module-begin-flag.*/;
+  fileStr = cat(file);
+  return ( (!regex.test(fileStr)) ?
+    fileStr : (inplace) ?
+      sed('-i', regex, '', file) : fileStr.replace(regex, '')
+  );
+}
+
+/**
+ * Inserts the copyright for a minified cure.js file.
+ * @param {string} file - The file to update.
+ * @param {boolean=} space - If true adds starting line breaks.
+ */
+function insertCopyright(file, space) {
+
+  /** @type {!RegExp} */
+  var regex;
+  /** @type {string} */
+  var copyright;
+
+  regex = /^[\s\S]*?blank-line.*\n/;
+  copyright = (space) ? '\n\n' : '';
+  copyright += fixLineBreaks('resources/minified-copyright.txt');
+  sed('-i', regex, copyright, file);
+}
+
+/**
+ * Inserts the external scripts into a minified cure.js file.
+ * @param {string} file - The file to update.
+ */
+function insertExterns(file) {
+
+  /** @type {!RegExp} */
+  var regex;
+  /** @type {string} */
+  var externs;
+
+  regex = /^\n/;
+  externs = cat('dev/json.js').replace(regex, '');
+  sed('-i', regex, externs, file);
 }
