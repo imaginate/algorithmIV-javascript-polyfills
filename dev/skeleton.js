@@ -2,17 +2,17 @@
 
 /**
  * -----------------------------------------------------------------------------
- * Cure.js (v0.0.2)
+ * Cure.js (v0.0.3)
  * -----------------------------------------------------------------------------
  * @file Cure.js is a collection of JavaScript and DOM polyfills that help
  *   ensure that your web development is cross-browser compatible. At the moment
  *   they only include a small selection of polyfills needed to support
  *   [imaginate]{@link https://github.com/imaginate}'s other projects. The only
  *   native object's functionality that has been completely polyfilled is the
- *   [Console]{@link https://github.com/imaginate/cure/blob/master/src/pre-compiled-cure/polyfills/console.js}
+ *   [Console]{@link https://github.com/imaginate/cure/blob/master/dev/console.js}
  *   object.
  * @module Cure
- * @version 0.0.2
+ * @version 0.0.3
  * @author Adam Smith adamsmith@algorithmiv.com
  * @copyright 2015 Adam A Smith [github.com/imaginate]{@link https://github.com/imaginate}
  * @license The Apache License [algorithmiv.com/cure/license]{@link http://algorithmiv.com/cure/license}
@@ -35,15 +35,6 @@
  */
 
 ////////////////////////////////////////////////////////////////////////////////
-// The Dependencies
-////////////////////////////////////////////////////////////////////////////////
-
-/* -----------------------------------------------------------------------------
- * BestieJS JSON3 (dependencies/json3.min.js)
- * -------------------------------------------------------------------------- */
-// insert-json3
-
-////////////////////////////////////////////////////////////////////////////////
 // The Cure Polyfills
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -51,23 +42,30 @@
   "use strict";
 
 /* -----------------------------------------------------------------------------
- * The Console Polyfills (polyfills/console.js)
+ * Cure JSON (json.js)
+ * --------------------------------------------------------------------------
+ * Note: Uses 3rd Party Script - JSON3 v3.3.2 (bestiejs.github.io/json3)
  * -------------------------------------------------------------------------- */
-// insert-console
+// insert-json
 
 /* -----------------------------------------------------------------------------
- * The Object Polyfills (polyfills/object.js)
+ * Cure AJAX (ajax.js)
  * -------------------------------------------------------------------------- */
-// insert-object
+// insert-ajax
 
 /* -----------------------------------------------------------------------------
- * The Array Polyfills (polyfills/array.js)
+ * Cure Array (array.js)
  * -------------------------------------------------------------------------- */
 // insert-array
 
 /* -----------------------------------------------------------------------------
- * The XMLHttpRequest Polyfills (polyfills/xml-http-request.js)
+ * Cure Console (console.js)
  * -------------------------------------------------------------------------- */
-// insert-xml-http-request
+// insert-console
+
+/* -----------------------------------------------------------------------------
+ * Cure Object (object.js)
+ * -------------------------------------------------------------------------- */
+// insert-object
 
 })(window, document);
