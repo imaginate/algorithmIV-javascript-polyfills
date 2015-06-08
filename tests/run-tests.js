@@ -75,5 +75,6 @@ catch (error) {
 // @example $ npm run test
 
 if (!hasError) {
+  console.log('Tests for Cure.js have not been written yet.');
   // TEST SCRIPT TRIGGER GOES HERE
 }
