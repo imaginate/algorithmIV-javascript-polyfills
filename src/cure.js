@@ -43,15 +43,19 @@
   // AMD
   if (typeof define === 'function' && define.amd &&
       typeof define.amd === 'object') {
-    define([], cure);
+    define([], function() {
+      cure(root, 'amd');
+    });
   }
   // Node.js
   else if (typeof exports === 'object') {
-    module.exports = cure;
+    module.exports = function() {
+      cure(root, 'node');
+    };
   }
   // Browser
   else {
-    cure();
+    cure(root, 'browser');
   }
 
 })(this,
@@ -60,7 +64,9 @@
 // The Cure Polyfills
 ////////////////////////////////////////////////////////////////////////////////
 
-function cure() {
+function cure(/** Object */ root, /** string */ env) {
+
+var window = (!!window) ? window : root;
 
 /* -----------------------------------------------------------------------------
  * Cure JSON (json.js)
@@ -86,14 +92,14 @@ l&&(d=a.charCodeAt(b),48<=d&&57>=d);b++);if(46==a.charCodeAt(b)){for(e=++b;e<l&&
 e,c));else C(g,function(a){U(g,a,c)});return c.call(a,b,g)};q.parse=function(a,f){var c,g;b=0;H=""+a;c=R(y());"$"!=y()&&m();b=H=null;return f&&"[object Function]"==t.call(f)?T((g={},g[""]=c,g),"",f):c}}}q.runInContext=M;return q}var I=typeof define==="function"&&define.amd,D={"function":!0,object:!0},A=D[typeof exports]&&exports&&!exports.nodeType&&exports,f=D[typeof window]&&window||this,p=A&&D[typeof module]&&module&&!module.nodeType&&"object"==typeof global&&global;!p||p.global!==p&&p.window!==
 p&&p.self!==p||(f=p);if(A&&!I)M(f,A);else{var J=f.JSON,K=f.JSON3,L=!1,B=M(f,f.JSON3={noConflict:function(){L||(L=!0,f.JSON=J,f.JSON3=K,J=K=null);return B}});f.JSON={parse:B.parse,stringify:B.stringify}}I&&define(function(){return B})}).call(this);
 
-(function(window, document, undefined) {
+(function(root, undefined) {
   "use strict";
 
 /* -----------------------------------------------------------------------------
  * Cure AJAX (ajax.js)
  * -------------------------------------------------------------------------- */
 
-  if (!XMLHttpRequest) {
+  if (!root.XMLHttpRequest && env !== 'node') {
     /**
      * ---------------------------------------------
      * Public Constructor (XMLHttpRequest)
@@ -102,7 +108,7 @@ p&&p.self!==p||(f=p);if(A&&!I)M(f,A);else{var J=f.JSON,K=f.JSON3,L=!1,B=M(f,f.JS
      *   [see MDN]{@link https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest}
      * @constructor
      */
-    XMLHttpRequest = function() {
+    root.XMLHttpRequest = function() {
 
       /** @type {!Object} */
       var obj;
@@ -720,5 +726,5 @@ p&&p.self!==p||(f=p);if(A&&!I)M(f,A);else{var J=f.JSON,K=f.JSON3,L=!1,B=M(f,f.JS
     };
   }
 
-})(window, document); // End anon module
+})(window); // End anon module
 });  // End cure module & export

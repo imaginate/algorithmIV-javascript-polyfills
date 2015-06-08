@@ -43,15 +43,19 @@
   // AMD
   if (typeof define === 'function' && define.amd &&
       typeof define.amd === 'object') {
-    define([], cure);
+    define([], function() {
+      cure(root, 'amd');
+    });
   }
   // Node.js
   else if (typeof exports === 'object') {
-    module.exports = cure;
+    module.exports = function() {
+      cure(root, 'node');
+    };
   }
   // Browser
   else {
-    cure();
+    cure(root, 'browser');
   }
 
 })(this,
@@ -60,7 +64,9 @@
 // The Cure Polyfills
 ////////////////////////////////////////////////////////////////////////////////
 
-function cure() {
+function cure(/** Object */ root, /** string */ env) {
+
+var window = (!!window) ? window : root;
 
 /* -----------------------------------------------------------------------------
  * Cure JSON (json.js)
@@ -69,7 +75,7 @@ function cure() {
  * -------------------------------------------------------------------------- */
 // insert-json
 
-(function(window, document, undefined) {
+(function(root, undefined) {
   "use strict";
 
 /* -----------------------------------------------------------------------------
@@ -92,5 +98,5 @@ function cure() {
  * -------------------------------------------------------------------------- */
 // insert-object
 
-})(window, document); // End anon module
+})(window); // End anon module
 });  // End cure module & export

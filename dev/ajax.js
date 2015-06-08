@@ -1,5 +1,5 @@
 
-  if (!XMLHttpRequest) {
+  if (!root.XMLHttpRequest && env !== 'node') {
     /**
      * ---------------------------------------------
      * Public Constructor (XMLHttpRequest)
@@ -8,7 +8,7 @@
      *   [see MDN]{@link https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest}
      * @constructor
      */
-    XMLHttpRequest = function() {
+    root.XMLHttpRequest = function() {
 
       /** @type {!Object} */
       var obj;
