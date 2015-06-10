@@ -1,7 +1,7 @@
 {
   "name": "cure",
   "version": "0.0.3",
-  "description": "Cure Your JS & DOM Browser Incompatibilities",
+  "description": "Cure Your JavaScript Environment",
   "main": "src/cure.min.js",
   "repository": {
     "type": "git",
@@ -13,7 +13,8 @@
     "polyfill",
     "compatible",
     "javascript",
-    "imaginate"
+    "imaginate",
+    "environment"
   ],
   "author": "Adam Smith <adamsmith@algorithmiv.com> (https://github.com/imaginate)",
   "license": "Apache-2.0",
