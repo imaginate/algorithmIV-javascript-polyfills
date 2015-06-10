@@ -1,29 +1,29 @@
-# Make Your JS & DOM Cross-Browser Compatible 
+# Cure Your JS Environment!
 
-#### Cure.js is a collection of JavaScript and DOM polyfills that help ensure your web development is cross-browser compatible.
+#### Cure.js is a collection of JavaScript polyfills that help ensure your web environment is cross-browser compatible.
 
-#### Note: At the moment Cure only includes polyfills for a small portion of the native JavaScript and DOM objects (specifically the functionality used by [imaginate](https://github.com/imaginate)'s other projects). The only object's functionality that has been completely polyfilled is the [Console](https://github.com/imaginate/cure/blob/master/src/pre-compiled-cure/polyfills/console.js).
-
-
-##Getting Started
-Download [cure.min.js](https://github.com/imaginate/cure/blob/master/src/cure.min.js) and add it to your HTML head before any other scripts.
-```html
-<html>
-    <head>
-        ...
-        <script src="cure.min.js"></script>
-        ...
-    </head>
-    <body>...</body>
-</html>
-```
+#### Note: At the moment Cure.js only includes polyfills for a small portion of the native JavaScript objects (specifically the functionality used in [imaginate](https://github.com/imaginate)'s other projects). The only object's functionality that has been completely filled is the [console](https://github.com/imaginate/cure/blob/master/dev/console.js).
 
 
-##Contact Us
+## Getting Started
+For a stand-alone browser environment:
+- Download [cure.min.js](https://github.com/imaginate/cure/blob/master/src/cure.min.js)
+- Before any other scripts add ``` <script src="cure.min.js"></script> ``` to your HTML's ``` head ``` or ``` body ```
+
+For an AMD browser environment:
+- Download [cure.min.js](https://github.com/imaginate/cure/blob/master/src/cure.min.js)
+- Use ``` require('cure')() ```
+
+For a Node.js environment:
+- Run ``` $ npm install cure ```
+- Use ``` require('cure')() ```
+
+
+## Contact Us
 - [Open an issue](https://github.com/imaginate/cure/issues) on this GitHub repository
 - Send an email to [learn@algorithmiv.com](mailto:learn@algorithmiv.com)
-<br />
 
+<br />
 --
 **Happy Developing,**
 
