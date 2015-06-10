@@ -1,5 +1,5 @@
 {
-  "name": "cure",
+  "name": "curejs",
   "version": "0.0.3",
   "description": "Cure Your JavaScript Environment",
   "main": "src/cure.min.js",

@@ -15,7 +15,7 @@ For an AMD browser environment:
 - Use ``` require('cure')() ```
 
 For a Node.js environment:
-- Run ``` $ npm install cure ```
+- Run ``` $ npm install curejs ```
 - Use ``` require('cure')() ```
 
 
