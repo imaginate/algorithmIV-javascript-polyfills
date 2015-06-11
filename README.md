@@ -2,7 +2,8 @@
 
 #### Cure.js is a collection of JavaScript polyfills that help ensure your web environment is cross-browser compatible.
 
-#### Note: At the moment Cure.js only includes polyfills for a small portion of the native JavaScript objects (specifically the functionality used in [imaginate](https://github.com/imaginate)'s other projects). The only object's functionality that has been completely filled is the [console](https://github.com/imaginate/cure/blob/master/dev/console.js).
+
+**Note: At the moment Cure.js only includes polyfills for a small portion of the native JavaScript objects (specifically the functionality used in [imaginate](https://github.com/imaginate)'s other projects). The only object's functionality that has been completely filled is the [console](https://github.com/imaginate/cure/blob/master/dev/console.js).**
 
 
 ## Getting Started
