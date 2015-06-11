@@ -1,31 +1,41 @@
-Thumbs.db
-ehthumbs.db
-Desktop.ini
-$RECYCLE.BIN/
+# Ignore Files
 *.cab
+*.css.map
+*.lnk
+*.log
 *.msi
 *.msm
 *.msp
-*.lnk
-*.log
-.DS_Store
-.AppleDouble
-.LSOverride
-._*
-.Spotlight-V100
-.Trashes
-.AppleDB
-.AppleDesktop
-Network Trash Folder
-Temporary Items
-.apdisk
-node_modules
-logs
-pids
 *.pids
 *.seed
-lib-cov
-coverage
-.grunt
+$RECYCLE.BIN/
+.*.swp
+._*
+.apdisk
+.AppleDB
+.AppleDesktop
+.AppleDouble
+.DS_Store
+.env
+.env.php
+.env.*.php
+.hg
 .lock-wscript
+.LSOverride
+.sass-cache
+.Spotlight-V100
+.Trashes
+.wafpickle-*
+bootstrap/compiled.php
 build/Release
+coverage
+CVS
+Desktop.ini
+ehthumbs.db
+lib-cov
+logs
+Network Trash Folder
+node_modules
+pids
+Temporary Items
+Thumbs.db
