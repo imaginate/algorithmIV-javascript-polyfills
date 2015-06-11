@@ -2,7 +2,7 @@
 
 /**
  * -----------------------------------------------------------------------------
- * Cure.js (v0.0.3)
+ * Cure.js (v0.0.4)
  * -----------------------------------------------------------------------------
  * @file Cure.js is a collection of JavaScript and DOM polyfills that help
  *   ensure that your web development is cross-browser compatible. At the moment
@@ -12,7 +12,7 @@
  *   [Console]{@link https://github.com/imaginate/cure/blob/master/dev/console.js}
  *   object.
  * @module Cure
- * @version 0.0.3
+ * @version 0.0.4
  * @author Adam Smith adamsmith@algorithmiv.com
  * @copyright 2015 Adam A Smith [github.com/imaginate]{@link https://github.com/imaginate}
  * @license The Apache License [algorithmiv.com/cure/license]{@link http://algorithmiv.com/cure/license}

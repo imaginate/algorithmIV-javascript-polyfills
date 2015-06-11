@@ -1,6 +1,6 @@
 {
   "name": "curejs",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Cure Your JavaScript Environment",
   "main": "src/cure.min.js",
   "repository": {

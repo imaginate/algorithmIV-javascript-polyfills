@@ -3,7 +3,7 @@
  * Cure.js - CLI Command (run-tests)
  * -----------------------------------------------------------------------------
  * @file Handles the 'run-tests' command-line command for Cure.js.
- * @version 0.0.3
+ * @version 0.0.4
  * @author Adam Smith adamsmith@algorithmiv.com
  * @copyright 2015 Adam A Smith [github.com/imaginate]{@link https://github.com/imaginate}
  * @license The Apache License [algorithmiv.com/cure/license]{@link http://www.algorithmiv.com/cure/license}
