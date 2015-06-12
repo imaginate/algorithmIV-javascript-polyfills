@@ -8,15 +8,17 @@
 ## Getting Started
 For a stand-alone browser environment:
 - Download [cure.min.js](https://github.com/imaginate/cure/blob/master/src/cure.min.js)
+- Save it to your app's main folder
 - Before any other scripts add ``` <script src="cure.min.js"></script> ``` to your HTML's ``` head ``` or ``` body ```
 
 For an AMD browser environment:
 - Download [cure.min.js](https://github.com/imaginate/cure/blob/master/src/cure.min.js)
-- Use ``` require('cure') ```
+- Add it to your app's library folder
+- Use ``` require(['cure.min'], function(null) { ... }); ```
 
 For a Node.js environment:
 - Run ``` $ npm install curejs ```
-- Use ``` require('cure') ```
+- Use ``` require('curejs') ```
 
 
 ## Contact Us
