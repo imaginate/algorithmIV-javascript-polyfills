@@ -14,25 +14,10 @@
     };
   }
 
-  /** @type {boolean} */
-  var checkArrayProtoIndexOf = (function checkArrayProtoIndexOf(doesIndexOf) {
-
-    /** @type {boolean} */
-    var result;
-    /** @type {!Array<number>} */
-    var arr;
-
-    result = doesIndexOf;
-    if (result) {
-     arr = [ 8, 9 ];
-     result = (arr.indexOf(8, 2)  === -1) && (arr.indexOf(9, -1) === -1);
-    }
-
-    return result;
-
-  })(!!Array.prototype.indexOf);
-
-  if (!checkArrayProtoIndexOf) {
+  if (!Array.prototype.indexOf ||
+      !(function(/** !Array<number> */ arr) {
+        return (arr.indexOf(8, 2) === -1) && (arr.indexOf(9, -1) === -1);
+      })([ 8, 9 ]) ) {
     /**
      * ---------------------------------------------
      * Public Method (Array.prototype.indexOf)
