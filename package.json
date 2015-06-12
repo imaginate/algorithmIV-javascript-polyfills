@@ -1,21 +1,12 @@
 {
   "name": "curejs",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Cure Your JavaScript Environment",
   "main": "src/cure.min.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/imaginate/cure.git"
   },
-  "keywords": [
-    "cure",
-    "cross-browser",
-    "polyfill",
-    "compatible",
-    "javascript",
-    "imaginate",
-    "environment"
-  ],
   "author": "Adam Smith <adamsmith@algorithmiv.com> (https://github.com/imaginate)",
   "license": "Apache-2.0",
   "scripts": {
@@ -30,5 +21,20 @@
   },
   "engines": {
     "node": ">=0.8.0"
-  }
+  },
+  "keywords": [
+    "cure",
+    "curejs",
+    "cure-js",
+    "cure js",
+    "cure javascript",
+    "cross-browser",
+    "polyfill",
+    "compatible",
+    "javascript",
+    "imaginate",
+    "environment",
+    "js environment",
+    "javascript environment"
+  ]
 }
