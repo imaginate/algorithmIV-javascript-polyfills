@@ -7,7 +7,12 @@
    *   [see MDN]{@link https://developer.mozilla.org/en-US/docs/Web/API/Console}
    * @type {Object<string, function}
    */
-  window.console = window.console || {};
+  if (hasWindow) {
+    window.console = window.console || {};
+  }
+  else {
+    root.console = root.console || {};
+  }
 
   (function(console, emptyFunc) {
 
@@ -355,4 +360,4 @@
     })((typeof console.log === 'object'), Function.prototype.bind,
         Function.prototype.call, Array.prototype.slice);
 
-  })(window.console, function(){});
+  })( (hasWindow) ? window.console : root.console, function(){});
