@@ -1,9 +1,8 @@
 # Cure Your JS Environment!
 
-#### Cure.js is a collection of JavaScript polyfills that help ensure your web environment is cross-browser compatible.
+#### Cure.js is a collection of JavaScript polyfills that help ensure your web environment is cross-browser compatible and your JavaScript engine executes properly.
 
-
-**Note: At the moment Cure.js only includes polyfills for a small portion of the native JavaScript objects (specifically the functionality used in [imaginate](https://github.com/imaginate)'s other projects). The only object's functionality that has been completely filled is the [console](https://github.com/imaginate/cure/blob/master/dev/console.js).**
+#### Note: At the moment Cure.js only includes polyfills for a small portion of the native JavaScript objects (specifically the functionality used in [imaginate](https://github.com/imaginate)'s other projects). The only object's functionality that has been completely filled is the [console](https://github.com/imaginate/cure/blob/master/dev/parts/console.js).
 
 
 ## Getting Started
@@ -13,11 +12,11 @@ For a stand-alone browser environment:
 
 For an AMD browser environment:
 - Download [cure.min.js](https://github.com/imaginate/cure/blob/master/src/cure.min.js)
-- Use ``` require('cure')() ```
+- Use ``` require('cure') ```
 
 For a Node.js environment:
 - Run ``` $ npm install curejs ```
-- Use ``` require('cure')() ```
+- Use ``` require('cure') ```
 
 
 ## Contact Us
