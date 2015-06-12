@@ -17,6 +17,14 @@
 
   runCure.call(root, !!window);
 
+  // AMD
+  if (typeof define === 'function' &&
+      typeof define.amd === 'object' && define.amd) {
+    define(function() {
+      return null;
+    });
+  }
+
   /**
    * ---------------------------------------------------
    * Private Function (isObj)

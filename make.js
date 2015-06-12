@@ -378,6 +378,8 @@ function removeIntro(file, inplace) {
   /** @type {string} */
   var fileStr;
 
+//  regex = /\n\s\s\/\/\sAMD\n[\s\S]*?\n\s*?\}\n/;
+//  fileStr = cat(file).replace(regex, '');
   regex = /^(.*\n\n)[\s\S]*?\*\/\n/;
   fileStr = cat(file);
   return ( (!regex.test(fileStr)) ?
