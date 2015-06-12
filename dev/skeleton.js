@@ -2,7 +2,7 @@
 
 /**
  * -----------------------------------------------------------------------------
- * Cure.js (v0.0.4)
+ * Cure.js (v0.0.5)
  * -----------------------------------------------------------------------------
  * @file Cure.js is a collection of JavaScript and DOM polyfills that help
  *   ensure that your web development is cross-browser compatible. At the moment
@@ -12,7 +12,7 @@
  *   [Console]{@link https://github.com/imaginate/cure/blob/master/dev/console.js}
  *   object.
  * @module Cure
- * @version 0.0.4
+ * @version 0.0.5
  * @author Adam Smith adamsmith@algorithmiv.com
  * @copyright 2015 Adam A Smith [github.com/imaginate]{@link https://github.com/imaginate}
  * @license The Apache License [algorithmiv.com/cure/license]{@link http://algorithmiv.com/cure/license}
@@ -38,65 +38,49 @@
 // Export Cure
 ////////////////////////////////////////////////////////////////////////////////
 
-;(function(root, cure) {
-
-  // AMD
-  if (typeof define === 'function' && define.amd &&
-      typeof define.amd === 'object') {
-    define([], function() {
-      cure(root, 'amd');
-    });
-  }
-  // Node.js
-  else if (typeof exports === 'object') {
-    module.exports = function() {
-      cure(root, 'node');
-    };
-  }
-  // Browser
-  else {
-    cure(root, 'browser');
-  }
-
-})(this,
-
-////////////////////////////////////////////////////////////////////////////////
-// The Cure Polyfills
-////////////////////////////////////////////////////////////////////////////////
-
-function cure(/** Object */ root, /** string */ env) {
-
-var window = (!!window) ? window : root;
+;(function(/** Object */ root, /** function(Object, boolean) */ runCure) {
 
 /* -----------------------------------------------------------------------------
- * Cure JSON (json.js)
+ * Export Vitals (dev/export.js)
+ * -------------------------------------------------------------------------- */
+// insert-export
+
+})(this, function(/** boolean */ hasWindow, undefined) {
+
+  "use strict";
+
+  /** @type {Object} */
+  var root = this;
+
+////////////////////////////////////////////////////////////////////////////////
+// The Cure Module
+////////////////////////////////////////////////////////////////////////////////
+
+/* -----------------------------------------------------------------------------
+ * Cure JSON (dev/parts/json.js)
  * --------------------------------------------------------------------------
  * Note: Uses 3rd Party Script - JSON3 v3.3.2 (bestiejs.github.io/json3)
  * -------------------------------------------------------------------------- */
 // insert-json
 
-(function(root, undefined) {
-  "use strict";
-
 /* -----------------------------------------------------------------------------
- * Cure AJAX (ajax.js)
+ * Cure AJAX (dev/parts/ajax.js)
  * -------------------------------------------------------------------------- */
 // insert-ajax
 
 /* -----------------------------------------------------------------------------
- * Cure Array (array.js)
+ * Cure Array (dev/parts/array.js)
  * -------------------------------------------------------------------------- */
 // insert-array
 
 /* -----------------------------------------------------------------------------
- * Cure Console (console.js)
+ * Cure Console (dev/parts/console.js)
  * -------------------------------------------------------------------------- */
 // insert-console
 
 /* -----------------------------------------------------------------------------
- * Cure Object (object.js)
+ * Cure Object (dev/parts/object.js)
  * -------------------------------------------------------------------------- */
 // insert-object
 
-})(window); // End anon module
-});  // End cure module & export
+});
