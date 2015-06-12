@@ -2,7 +2,7 @@
 
 /**
  * -----------------------------------------------------------------------------
- * Cure.js (v0.0.4)
+ * Cure.js (v0.0.5)
  * -----------------------------------------------------------------------------
  * @file Cure.js is a collection of JavaScript and DOM polyfills that help
  *   ensure that your web development is cross-browser compatible. At the moment
@@ -12,7 +12,7 @@
  *   [Console]{@link https://github.com/imaginate/cure/blob/master/dev/console.js}
  *   object.
  * @module Cure
- * @version 0.0.4
+ * @version 0.0.5
  * @author Adam Smith adamsmith@algorithmiv.com
  * @copyright 2015 Adam A Smith [github.com/imaginate]{@link https://github.com/imaginate}
  * @license The Apache License [algorithmiv.com/cure/license]{@link http://algorithmiv.com/cure/license}
@@ -38,38 +38,76 @@
 // Export Cure
 ////////////////////////////////////////////////////////////////////////////////
 
-;(function(root, cure) {
-
-  // AMD
-  if (typeof define === 'function' && define.amd &&
-      typeof define.amd === 'object') {
-    define([], function() {
-      cure(root, 'amd');
-    });
-  }
-  // Node.js
-  else if (typeof exports === 'object') {
-    module.exports = function() {
-      cure(root, 'node');
-    };
-  }
-  // Browser
-  else {
-    cure(root, 'browser');
-  }
-
-})(this,
-
-////////////////////////////////////////////////////////////////////////////////
-// The Cure Polyfills
-////////////////////////////////////////////////////////////////////////////////
-
-function cure(/** Object */ root, /** string */ env) {
-
-var window = (!!window) ? window : root;
+;(function(/** Object */ root, /** function(Object, boolean) */ runCure) {
 
 /* -----------------------------------------------------------------------------
- * Cure JSON (json.js)
+ * Export Vitals (dev/export.js)
+ * -------------------------------------------------------------------------- */
+
+  /** @type {(Object|?function)} */
+  var exports = isObj(typeof exports) && getObj(exports, true);
+  /** @type {(Object|?function)} */
+  var module = isObj(typeof module) && getObj(module, true);
+  /** @type {(Object|?function)} */
+  var window = isObj(typeof window) && getObj(window);
+
+  root = (function(root, global, window, self) {
+    return global || window || self || root;
+  })(
+    root,
+    exports && module && isObj(typeof global, true) && getObj(global),
+    ( window && root && (window === root.window) ) ? null : window,
+    isObj(typeof self) && getObj(self)
+  );
+
+  runCure.call(root, !!window);
+
+  /**
+   * ---------------------------------------------------
+   * Private Function (isObj)
+   * ---------------------------------------------------
+   * @desc A helper method that checks if a value is an object.
+   * @private
+   * @param {string} typeOf
+   * @param {boolean=} noFunc
+   * @return {?boolean}
+   */
+  function isObj(typeOf, noFunc) {
+    return (typeOf === 'object') || (!noFunc && typeOf === 'function') || null;
+  }
+
+  /**
+   * ---------------------------------------------------
+   * Private Function (getObj)
+   * ---------------------------------------------------
+   * @desc A helper method that checks if an object is a valid object and
+   *   returns the object or null.
+   * @private
+   * @param {(Object|?function)} obj
+   * @param {boolean=} checkNode
+   * @return {boolean}
+   */
+  function getObj(obj, checkNode) {
+    if (obj && ( (checkNode && obj.nodeType) ||
+                 (!checkNode && !obj.Object) )) {
+      obj = null;
+    }
+    return obj;
+  }
+
+})(this, function(/** boolean */ hasWindow, undefined) {
+
+  "use strict";
+
+  /** @type {Object} */
+  var root = this;
+
+////////////////////////////////////////////////////////////////////////////////
+// The Cure Module
+////////////////////////////////////////////////////////////////////////////////
+
+/* -----------------------------------------------------------------------------
+ * Cure JSON (dev/parts/json.js)
  * --------------------------------------------------------------------------
  * Note: Uses 3rd Party Script - JSON3 v3.3.2 (bestiejs.github.io/json3)
  * -------------------------------------------------------------------------- */
@@ -90,16 +128,13 @@ a.charCodeAt(++b),d){case 92:case 34:case 47:case 98:case 116:case 110:case 102:
 l&&(d=a.charCodeAt(b),48<=d&&57>=d);b++);if(46==a.charCodeAt(b)){for(e=++b;e<l&&(d=a.charCodeAt(e),48<=d&&57>=d);e++);e==b&&m();b=e}d=a.charCodeAt(b);if(101==d||69==d){d=a.charCodeAt(++b);43!=d&&45!=d||b++;for(e=b;e<l&&(d=a.charCodeAt(e),48<=d&&57>=d);e++);e==b&&m();b=e}return+a.slice(g,b)}f&&m();c=a.slice(b,b+4);if("true"==c)return b+=4,!0;if("fals"==c&&101==a.charCodeAt(b+4))return b+=5,!1;if("null"==c)return b+=4,null;m()}return"$"},R=function(a){var b,c;"$"==a&&m();if("string"==typeof a){if("@"==
 (N?a.charAt(0):a[0]))return a.slice(1);if("["==a){for(b=[];;){a=y();if("]"==a)break;c?","==a?(a=y(),"]"==a&&m()):m():c=!0;","==a&&m();b.push(R(a))}return b}if("{"==a){for(b={};;){a=y();if("}"==a)break;c?","==a?(a=y(),"}"==a&&m()):m():c=!0;","!=a&&"string"==typeof a&&"@"==(N?a.charAt(0):a[0])&&":"==y()||m();b[a.slice(1)]=R(y())}return b}m()}return a},U=function(a,b,c){c=T(a,b,c);c===u?delete a[b]:a[b]=c},T=function(a,b,c){var g=a[b],e;if("object"==typeof g&&g)if("[object Array]"==t.call(g))for(e=g.length;e--;U(g,
 e,c));else C(g,function(a){U(g,a,c)});return c.call(a,b,g)};q.parse=function(a,f){var c,g;b=0;H=""+a;c=R(y());"$"!=y()&&m();b=H=null;return f&&"[object Function]"==t.call(f)?T((g={},g[""]=c,g),"",f):c}}}q.runInContext=M;return q}var I=typeof define==="function"&&define.amd,D={"function":!0,object:!0},A=D[typeof exports]&&exports&&!exports.nodeType&&exports,f=D[typeof window]&&window||this,p=A&&D[typeof module]&&module&&!module.nodeType&&"object"==typeof global&&global;!p||p.global!==p&&p.window!==
-p&&p.self!==p||(f=p);if(A&&!I)M(f,A);else{var J=f.JSON,K=f.JSON3,L=!1,B=M(f,f.JSON3={noConflict:function(){L||(L=!0,f.JSON=J,f.JSON3=K,J=K=null);return B}});f.JSON={parse:B.parse,stringify:B.stringify}}I&&define(function(){return B})}).call(this);
-
-(function(root, undefined) {
-  "use strict";
+p&&p.self!==p||(f=p);var J=f.JSON,K=f.JSON3,L=!1,B=M(f,f.JSON3={noConflict:function(){L||(L=!0,f.JSON=J,f.JSON3=K,J=K=null);return B}});f.JSON={parse:B.parse,stringify:B.stringify};I&&define(function(){return B})}).call(this);
 
 /* -----------------------------------------------------------------------------
- * Cure AJAX (ajax.js)
+ * Cure AJAX (dev/parts/ajax.js)
  * -------------------------------------------------------------------------- */
 
-  if (!root.XMLHttpRequest && env !== 'node') {
+  if (hasWindow && !window.XMLHttpRequest) {
     /**
      * ---------------------------------------------
      * Public Constructor (XMLHttpRequest)
@@ -108,7 +143,7 @@ p&&p.self!==p||(f=p);if(A&&!I)M(f,A);else{var J=f.JSON,K=f.JSON3,L=!1,B=M(f,f.JS
      *   [see MDN]{@link https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest}
      * @constructor
      */
-    root.XMLHttpRequest = function() {
+    window.XMLHttpRequest = function() {
 
       /** @type {!Object} */
       var obj;
@@ -135,7 +170,7 @@ p&&p.self!==p||(f=p);if(A&&!I)M(f,A);else{var J=f.JSON,K=f.JSON3,L=!1,B=M(f,f.JS
   }
 
 /* -----------------------------------------------------------------------------
- * Cure Array (array.js)
+ * Cure Array (dev/parts/array.js)
  * -------------------------------------------------------------------------- */
 
   if (!Array.isArray) {
@@ -153,25 +188,10 @@ p&&p.self!==p||(f=p);if(A&&!I)M(f,A);else{var J=f.JSON,K=f.JSON3,L=!1,B=M(f,f.JS
     };
   }
 
-  /** @type {boolean} */
-  var checkArrayProtoIndexOf = (function checkArrayProtoIndexOf(doesIndexOf) {
-
-    /** @type {boolean} */
-    var result;
-    /** @type {!Array<number>} */
-    var arr;
-
-    result = doesIndexOf;
-    if (result) {
-     arr = [ 8, 9 ];
-     result = (arr.indexOf(8, 2)  === -1) && (arr.indexOf(9, -1) === -1);
-    }
-
-    return result;
-
-  })(!!Array.prototype.indexOf);
-
-  if (!checkArrayProtoIndexOf) {
+  if (!Array.prototype.indexOf ||
+      !(function(/** !Array<number> */ arr) {
+        return (arr.indexOf(8, 2) === -1) && (arr.indexOf(9, -1) === -1);
+      })([ 8, 9 ]) ) {
     /**
      * ---------------------------------------------
      * Public Method (Array.prototype.indexOf)
@@ -223,7 +243,7 @@ p&&p.self!==p||(f=p);if(A&&!I)M(f,A);else{var J=f.JSON,K=f.JSON3,L=!1,B=M(f,f.JS
   }
 
 /* -----------------------------------------------------------------------------
- * Cure Console (console.js)
+ * Cure Console (dev/parts/console.js)
  * -------------------------------------------------------------------------- */
 
   /**
@@ -234,7 +254,12 @@ p&&p.self!==p||(f=p);if(A&&!I)M(f,A);else{var J=f.JSON,K=f.JSON3,L=!1,B=M(f,f.JS
    *   [see MDN]{@link https://developer.mozilla.org/en-US/docs/Web/API/Console}
    * @type {Object<string, function}
    */
-  window.console = window.console || {};
+  if (hasWindow) {
+    window.console = window.console || {};
+  }
+  else {
+    root.console = root.console || {};
+  }
 
   (function(console, emptyFunc) {
 
@@ -582,10 +607,10 @@ p&&p.self!==p||(f=p);if(A&&!I)M(f,A);else{var J=f.JSON,K=f.JSON3,L=!1,B=M(f,f.JS
     })((typeof console.log === 'object'), Function.prototype.bind,
         Function.prototype.call, Array.prototype.slice);
 
-  })(window.console, function(){});
+  })( (hasWindow) ? window.console : root.console, function(){});
 
 /* -----------------------------------------------------------------------------
- * Cure Object (object.js)
+ * Cure Object (dev/parts/object.js)
  * -------------------------------------------------------------------------- */
 
   if (!Object.keys) {
@@ -726,5 +751,4 @@ p&&p.self!==p||(f=p);if(A&&!I)M(f,A);else{var J=f.JSON,K=f.JSON3,L=!1,B=M(f,f.JS
     };
   }
 
-})(window); // End anon module
-});  // End cure module & export
+});
