@@ -4,7 +4,7 @@
  * -----------------------------------------------------------------------------
  * @file Handles the 'make' command-line command for Cure.js. Note: Java Runtime
  *   Environment version 7 is required before running this command.
- * @version 0.0.4
+ * @version 0.0.5
  * @author Adam Smith adamsmith@algorithmiv.com
  * @copyright 2015 Adam A Smith [github.com/imaginate]{@link https://github.com/imaginate}
  * @license The Apache License [algorithmiv.com/cure/license]{@link http://www.algorithmiv.com/cure/license}
@@ -260,6 +260,7 @@ function compileScript(destDir, filename, minify, parts) {
   cd(__dirname);
   cp('-f', 'dev/skeleton.js', fileDest);
   fixLineBreaks(fileDest, true);
+  insertExportScript(fileDest);
   parts.split(' ').forEach( insertScript(fileDest) );
   cleanScript(fileDest, true);
 
@@ -307,6 +308,22 @@ function fixLineBreaks(file, inplace) {
 }
 
 /**
+ * Inserts the export logic for cure.js.
+ * @param {string} filePath - The path to the file to insert into.
+ */
+function insertExportScript(filePath) {
+
+  /** @type {!RegExp} */
+  var regex;
+  /** @type {string} */
+  var exportStr;
+
+  regex = /\n\/\/\sinsert-export.*\n/;
+  exportStr = '\n' + fixLineBreaks('dev/export.js');
+  sed('-i', regex, exportStr, filePath);
+}
+
+/**
  * Returns a function that inserts a section of cure.js from ./dev/ into a file.
  * @param {string} filePath - The path to the file to insert a part into.
  * @return {function} The insert function.
@@ -321,7 +338,7 @@ function insertScript(filePath) {
   return function insertScript(/** string */ part) {
     if (isPart(part) && !isAll(part)) {
       regex = new RegExp('\\n\\/\\/\\sinsert-' + part + '.*\\n');
-      filePart = '\n' + fixLineBreaks('dev/' + part + '.js');
+      filePart = '\n' + fixLineBreaks('dev/parts/' + part + '.js');
       sed('-i', regex, filePart, filePath);
     }
   };
@@ -370,27 +387,6 @@ function removeIntro(file, inplace) {
 }
 
 /**
- * Removes the external scripts from a compiled cure.js file.
- * @param {string} file - The file to clean.
- * @param {boolean=} inplace - Replace the file's contents.
- * @return {string} The cleaned file's contents.
- */
-function removeExterns(file, inplace) {
-
-  /** @type {!RegExp} */
-  var regex;
-  /** @type {string} */
-  var fileStr;
-
-  regex = /.*cure-polyfills-begin-flag[\s\S]*?cure-module-begin-flag.*/;
-  fileStr = cat(file);
-  return ( (!regex.test(fileStr)) ?
-    fileStr : (inplace) ?
-      sed('-i', regex, '', file) : fileStr.replace(regex, '')
-  );
-}
-
-/**
  * Inserts the copyright for a minified cure.js file.
  * @param {string} file - The file to update.
  */
@@ -404,20 +400,4 @@ function insertCopyright(file) {
   regex = /^[\s\S]*?blank-line.*\n/;
   copyright = fixLineBreaks('resources/minified-copyright.txt');
   sed('-i', regex, copyright, file);
-}
-
-/**
- * Inserts the external scripts into a minified cure.js file.
- * @param {string} file - The file to update.
- */
-function insertExterns(file) {
-
-  /** @type {!RegExp} */
-  var regex;
-  /** @type {string} */
-  var externs;
-
-  regex = /\/\*.*?json3-flag.*?\*\//;
-  externs = cat('dev/json.js').replace(regex, '');
-  sed('-i', regex, externs, file);
 }

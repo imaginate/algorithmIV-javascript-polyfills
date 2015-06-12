@@ -1,3 +1,4 @@
+
   /** @type {(Object|?function)} */
   var exports = isObj(typeof exports) && getObj(exports, true);
   /** @type {(Object|?function)} */
