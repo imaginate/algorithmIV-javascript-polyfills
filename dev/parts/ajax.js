@@ -1,5 +1,5 @@
 
-  if (!root.XMLHttpRequest && env !== 'node') {
+  if (hasWindow && !window.XMLHttpRequest) {
     /**
      * ---------------------------------------------
      * Public Constructor (XMLHttpRequest)
@@ -8,7 +8,7 @@
      *   [see MDN]{@link https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest}
      * @constructor
      */
-    root.XMLHttpRequest = function() {
+    window.XMLHttpRequest = function() {
 
       /** @type {!Object} */
       var obj;
